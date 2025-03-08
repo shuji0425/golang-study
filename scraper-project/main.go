@@ -9,9 +9,9 @@ import (
 func main() {
 	// スクレイピングするURLのリスト
 	urls := []string{
-		"https://example.com",
-		"https://golang.org",
-		// "https://www.wikipedia.org/",
+		"https://scraping-for-beginner.herokuapp.com/ranking/",
+		"https://scraping-training.vercel.app/site?postCount=20&title=%E3%81%93%E3%82%8C%E3%81%AF{no}%E3%81%AE%E8%A8%98%E4%BA%8B%E3%81%A7%E3%81%99&dateFormat=YYYY-MM-DD&isTime=true&timeFormat=&isImage=true&interval=360&isAgo=true&countPerPage=10&page=1&robots=true&",
+		"https://scraping.okinan.com/",
 	}
 
 	// 訪問済みURLを管理するマップ

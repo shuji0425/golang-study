@@ -3,7 +3,6 @@ package scraper
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 // 複数のURLから並行してタイトルを取得
@@ -41,9 +40,6 @@ func FetchTitles(urls []string, visited map[string]bool, mu *sync.Mutex, depth i
 		localWg.Add(1) // ゴルーチンを待機リストに追加
 		go func(url string) {
 			defer localWg.Done() // 処理完了で待機リストから削除
-
-			// レートリミット：各リクエスト間に短い待機時間を入れる
-			time.Sleep(500 * time.Millisecond)
 
 			// 訪問済みチェック
 			mu.Lock()
