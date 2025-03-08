@@ -8,7 +8,7 @@ import (
 )
 
 // HTMLからページタイトルを抽出
-func ParseTitlle(html string) (string, error) {
+func ParseTitle(html string) (string, error) {
 	// gogueryでHTMLを解析
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
 	if err != nil {

@@ -9,9 +9,9 @@ import (
 func main() {
 	// スクレイピングするURLのリスト
 	urls := []string{
-		// "https://example.com",
-		// "https://golang.org",
-		"https://www.wikipedia.org/",
+		"https://example.com",
+		"https://golang.org",
+		// "https://www.wikipedia.org/",
 	}
 
 	// 訪問済みURLを管理するマップ

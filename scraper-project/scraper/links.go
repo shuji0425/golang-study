@@ -9,7 +9,7 @@ import (
 )
 
 // HTMLから全てのリンクを抽出
-func ExtraciLinks(html string, baseURL string) ([]string, error) {
+func ExtractLinks(html string, baseURL string) ([]string, error) {
 	var links []string
 
 	// ベースURLを解析

@@ -22,6 +22,7 @@ func FetchTitles(urls []string, visited map[string]bool, mu *sync.Mutex, depth i
 	// 再起で次に処理するリンクを一時的に保存
 	newLinksSet := make(map[string]bool)
 	var localWg sync.WaitGroup
+	var results []ScrapedData // 保存するデータ
 
 	// 各URLについてグルーチンで処理を並行実行
 	for _, url := range urls {
@@ -46,18 +47,25 @@ func FetchTitles(urls []string, visited map[string]bool, mu *sync.Mutex, depth i
 			}
 
 			// HTMLからタイトルを解析
-			title, err := ParseTitlle(html)
+			title, err := ParseTitle(html)
 			if err != nil {
 				fmt.Printf("タイトルの解析に失敗: %v\n", err)
 				return
 			}
 
 			// リンクを取得
-			links, err := ExtraciLinks(html, url)
+			links, err := ExtractLinks(html, url)
 			if err != nil {
 				fmt.Printf("リンクの取得に失敗: %v\n", err)
 				return
 			}
+
+			// 結果を保存する
+			results = append(results, ScrapedData{
+				URL:   url,
+				Title: title,
+				Links: links,
+			})
 
 			// 結果を表示
 			fmt.Printf("\n=== %s のスクレイピング結果 ===\n", url)
@@ -77,6 +85,24 @@ func FetchTitles(urls []string, visited map[string]bool, mu *sync.Mutex, depth i
 
 	// 全ての並行処理が終わるまで待つ
 	localWg.Wait()
+
+	// 保存
+	if len(results) > 0 {
+		// CSVに保存
+		err := SaveToCSV("scraped_data.csv", results)
+		if err != nil {
+			fmt.Printf("CSV保存に失敗: %v\n", err)
+			return
+		}
+
+		err = SaveToJSON("scraped_data.json", results)
+		if err != nil {
+			fmt.Printf("JSON保存に失敗: %v\n", err)
+			return
+		}
+
+		fmt.Println("CSVとJSONの保存に成功しました")
+	}
 
 	// ローカル集合から次にスクロールするURLのスライスを作成
 	newURLs := []string{}
