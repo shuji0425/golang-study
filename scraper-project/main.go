@@ -24,7 +24,7 @@ func main() {
 	// 待機リストに追加
 	wg.Add(1)
 	// 複数のURLから並行してタイトルを取得
-	scraper.FetchTitles(urls, visited, &mu, 2, &wg)
+	go scraper.FetchTitles(urls, visited, &mu, 2, &wg)
 	// 全てが終わるまで待機
 	wg.Wait()
 
