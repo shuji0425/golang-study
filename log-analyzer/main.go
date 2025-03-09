@@ -4,9 +4,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"log-analyzer/api"
 	"log-analyzer/output"
 	"log-analyzer/parser"
 	"log-analyzer/watcher"
+	"net/http"
 	"sync"
 )
 
@@ -33,6 +35,7 @@ func main() {
 	outputCSV := flag.Bool("csv", false, "CSVファイルに出力する")
 	outputJSON := flag.Bool("json", false, "JSONファイルに出力する")
 	outputChart := flag.Bool("chart", false, "エラーステータスのグラフを出力する")
+	apiMode := flag.Bool("api", false, "HTTP APIサーバーを起動する")
 	flag.Parse()
 
 	// 残りの引数をログファイルのリストとして取得
@@ -102,7 +105,15 @@ func main() {
 	if *outputChart {
 		output.GenerateBarChart("output/html/error_status.html", errorStats)
 		output.GenerateBarChart("output/html/time_status.html", timeStats)
+	}
 
+	// APIモードが有効ならHTTPサーバー起動
+	if *apiMode {
+		// /api/errosでエラー統計 /api/timesで時間統計を返す
+		http.HandleFunc("/api/errors", api.HandlerErrorStats(errorStats))
+		http.HandleFunc("/api/times", api.HandlerTimeStats(timeStats))
+		log.Println("HTTP APIサーバーをポート8080で起動中...")
+		log.Fatal(http.ListenAndServe(":8080", nil))
 	}
 
 	// 無限ループ
