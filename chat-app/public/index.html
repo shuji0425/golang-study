@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡易チャットアプリ</title>
+    <style>
+        #chat-box {
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>チャットアプリ</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="message" placeholder="メッセージを入力">
+    <button onclick="sendMessage()">送信</button>
+
+    <script>
+        // WebSocketサーバーへの接続
+        const ws = new WebSocket("ws://" + window.location.host + "/ws");
+
+        // サーバーからメッセージを受信した際の処理
+        ws.onmessage = function(event) {
+            const chat_box = document.getElementById("chat-box");
+            // 受信したメッセージを表示
+            chat_box.innerHTML += "<p>" + event.data + "<p>";
+            // スクロールを最下部に固定
+            chat_box.scrollTop = chat_box.scrollHeight;
+        };
+
+        // 送信ボタン押下の処理
+        function sendMessage() {
+            const input = document.getElementById("message");
+            ws.send(input.value);
+            input.value = "";
+        };
+
+        // エラー発生時のハンドリング
+        ws.onerror = function(error) {
+            console.error("WebSocketエラー:", error);
+        };
+    </script>
+</body>
+</html>
