@@ -1,6 +1,7 @@
 package watcher
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/fsnotify/fsnotify"
@@ -15,10 +16,10 @@ func WatchLogsDir(logDir string, callback func(string)) error {
 	}
 	defer watcher.Close()
 
-	// 指定したディレクトリを監視対象に追加
+	// 監視対象のディレクトリを追加
 	err = watcher.Add(logDir)
 	if err != nil {
-		return err
+		return fmt.Errorf("ディレクトリの監視に失敗しました: %w", err)
 	}
 
 	log.Printf("監視を開始: %s\n", logDir)
@@ -28,10 +29,13 @@ func WatchLogsDir(logDir string, callback func(string)) error {
 		select {
 		case event, ok := <-watcher.Events:
 			if !ok {
+				log.Println("監視イベントの受信に失敗")
 				return nil
 			}
+			log.Println("イベント発生:", event)
+
 			// 書き込みイベントを検出
-			if event.Op&fsnotify.Write == fsnotify.Write {
+			if event.Op&(fsnotify.Write|fsnotify.Create) != 0 {
 				log.Printf("変更を検出: %s\n", event.Name)
 				// 変更があったファイルを解析
 				callback(event.Name)

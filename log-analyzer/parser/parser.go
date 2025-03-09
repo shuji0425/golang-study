@@ -21,7 +21,7 @@ func ExtractErrorStats(filepath string) (map[string]int, map[string]int, error) 
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	errorRegex := regexp.MustCompile(`\[(\d{4}-\d{2}-\d{2} \d{2}):\d{2}:\d{2}\] ERROR (.+?):`)
+	errorRegex := regexp.MustCompile(`\[(\d{4}-\d{2}-\d{2} \d{2}):\d{2}:\d{2}\] ERROR (.+?)(?::|$)`)
 
 	// ファイルを1行ずつ読み込む
 	for scanner.Scan() {
