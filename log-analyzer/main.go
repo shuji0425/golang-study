@@ -6,10 +6,29 @@ import (
 	"log"
 	"log-analyzer/output"
 	"log-analyzer/parser"
+	"log-analyzer/watcher"
 	"sync"
 )
 
 func main() {
+	logDir := "logs"
+
+	// 監視を開始
+	go func() {
+		err := watcher.WatchLogsDir(logDir, func(filepath string) {
+			fmt.Println("解析開始:", filepath)
+			_, _, err := parser.ExtractErrorStats(filepath)
+			if err != nil {
+				log.Printf("解析エラー: %v\n", err)
+			} else {
+				fmt.Println("リアルタイム解析完了", filepath)
+			}
+		})
+		if err != nil {
+			log.Fatalf("監視エラー: %v\n", err)
+		}
+	}()
+
 	// コマンドライン引数の定義
 	outputCSV := flag.Bool("csv", false, "CSVファイルに出力する")
 	outputJSON := flag.Bool("json", false, "JSONファイルに出力する")
@@ -69,20 +88,23 @@ func main() {
 
 	// CSVオプションが指定されていたらCSVファイルに保存
 	if *outputCSV {
-		output.SaveResultsToCSV("logs/csv/error_status.csv", errorStats)
-		output.SaveResultsToCSV("logs/csv/time_status.csv", timeStats)
+		output.SaveResultsToCSV("output/csv/error_status.csv", errorStats)
+		output.SaveResultsToCSV("output/csv/time_status.csv", timeStats)
 	}
 
 	// JSONオプションが指定されていたらJSONファイルに保存
 	if *outputJSON {
-		output.SaveResultsToJSON("logs/json/error_status.json", errorStats)
-		output.SaveResultsToJSON("logs/json/time_status.json", timeStats)
+		output.SaveResultsToJSON("output/json/error_status.json", errorStats)
+		output.SaveResultsToJSON("output/json/time_status.json", timeStats)
 	}
 
 	// Chartオプションが指定されたていたらHTMLファイルに保存
 	if *outputChart {
-		output.GenerateBarChart("logs/html/error_status.html", errorStats)
-		output.GenerateBarChart("logs/html/time_status.html", timeStats)
+		output.GenerateBarChart("output/html/error_status.html", errorStats)
+		output.GenerateBarChart("output/html/time_status.html", timeStats)
 
 	}
+
+	// 無限ループ
+	select {}
 }
