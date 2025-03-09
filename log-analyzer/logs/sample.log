@@ -1,0 +1,38 @@
+[2025-03-08 10:00:01] INFO Server started
+[2025-03-08 10:01:05] ERROR Connection failed: timeout
+[2025-03-08 10:02:00] INFO User logged in: user123
+[2025-03-08 10:03:10] ERROR Database error: unable to connect
+[2025-03-08 10:05:00] WARN Low disk space
+[2025-03-08 10:06:45] ERROR Invalid request: malformed JSON
+[2025-03-08 10:07:30] INFO Server stopped
+[2025-03-08 10:10:12] ERROR Connection failed: timeout
+[2025-03-08 10:12:55] ERROR Database error: unable to connect
+[2025-03-08 10:14:03] ERROR Invalid request: malformed JSON
+[2025-03-08 10:15:47] ERROR Connection failed: timeout
+[2025-03-08 10:16:35] ERROR Database error: unable to connect
+[2025-03-08 10:17:20] ERROR Invalid request: malformed JSON
+[2025-03-08 10:18:13] ERROR Connection failed: timeout
+[2025-03-08 10:20:22] ERROR Database error: unable to connect
+[2025-03-08 10:22:19] ERROR Invalid request: malformed JSON
+[2025-03-08 10:25:00] ERROR Connection failed: timeout
+[2025-03-08 10:27:15] ERROR Database error: unable to connect
+[2025-03-08 10:28:50] ERROR Invalid request: malformed JSON
+[2025-03-08 10:30:55] ERROR Connection failed: timeout
+[2025-03-08 10:32:13] ERROR Database error: unable to connect
+[2025-03-08 10:34:45] ERROR Invalid request: malformed JSON
+[2025-03-08 10:36:10] ERROR Connection failed: timeout
+[2025-03-08 10:37:50] ERROR Database error: unable to connect
+[2025-03-08 10:39:05] ERROR Invalid request: malformed JSON
+[2025-03-08 10:40:33] ERROR Connection failed: timeout
+[2025-03-08 10:42:20] ERROR Database error: unable to connect
+[2025-03-08 10:44:15] ERROR Invalid request: malformed JSON
+[2025-03-08 10:46:00] ERROR Connection failed: timeout
+[2025-03-08 10:48:30] ERROR Database error: unable to connect
+[2025-03-08 10:50:22] ERROR Invalid request: malformed JSON
+[2025-03-08 10:52:10] ERROR Connection failed: timeout
+[2025-03-08 10:54:05] ERROR Database error: unable to connect
+[2025-03-08 10:56:15] ERROR Invalid request: malformed JSON
+[2025-03-08 10:58:45] ERROR Connection failed: timeout
+[2025-03-08 11:00:25] ERROR Database error: unable to connect
+[2025-03-08 11:02:10] ERROR Invalid request: malformed JSON
+[2025-03-09 12:30:45] ERROR Connection failed: Timeout
