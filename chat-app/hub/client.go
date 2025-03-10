@@ -1,4 +1,4 @@
-package main
+package hub
 
 import (
 	"log"
@@ -91,7 +91,7 @@ func (c *Client) writePump() {
 }
 
 // HTTPリクエストをWebSocket接続にアップグレードし、新しいClientを生成・登録する
-func serverWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
+func ServerWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("serveWsアップグレードエラー:", err)

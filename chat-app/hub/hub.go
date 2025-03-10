@@ -1,4 +1,4 @@
-package main
+package hub
 
 // 全てのクライアントを管理
 // メッセージのブロードキャストを行う
@@ -10,7 +10,7 @@ type Hub struct {
 }
 
 // Hubを初期化して返す
-func newHub() *Hub {
+func NewHub() *Hub {
 	return &Hub{
 		broadcast:  make(chan []byte),
 		register:   make(chan *Client),
@@ -21,7 +21,7 @@ func newHub() *Hub {
 
 // メインループ
 // 登録・解除・メッセージのブロードキャストを処理
-func (h *Hub) run() {
+func (h *Hub) Run() {
 	for {
 		select {
 		case client := <-h.register:
