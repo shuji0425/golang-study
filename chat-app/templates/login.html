@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>ログイン</title>
+</head>
+<body>
+	<h1>ログイン</h1>
+	{{if .}}
+	<p style="color:red">{{.}}</p>
+	{{end}}
+	<form method="post" action="/login">
+		<label>ユーザー名: <input type="text" name="username"></label><br>
+		<label>パスワード: <input type="password" name="password"></label><br>
+		<button type="submit">ログイン</button>
+	</form>
+	<p>アカウントがない方は <a href="/register">登録</a></p>
+</body>
+</html>
